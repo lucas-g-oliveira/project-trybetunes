@@ -1,8 +1,47 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Switch,
+} from 'react-router-dom';
+import Login from './components/Login';
+import Search from './components/Search';
+import Album from './components/Album';
+import Favorites from './components/Favorites';
+import Profile from './components/Profile';
+import ProfileEdit from './components/ProfileEdit';
+import NotFound from './components/NotFound';
 
 class App extends React.Component {
   render() {
-    return (<p>TrybeTunes</p>);
+    return (
+      <div>
+        <p>TrybeTunes</p>
+        <Router>
+          <div>
+            App
+            <Link to="/search">Search</Link>
+            <Link to="/album">Album</Link>
+            <Link to="/favorites">Favorites</Link>
+            <Link to="/profile">Profile</Link>
+            <Link to="/profile/edit">ProfileEdit</Link>
+            <Link to="/">Login</Link>
+            <Link to="*">NotFound</Link>
+
+            <Switch>
+              <Route path="/search" component={ Search } />
+              <Route path="/album/:id" render={ (props) => <Album { ...props } /> } />
+              <Route path="/favorites" component={ Favorites } />
+              <Route path="/profile/edit" component={ ProfileEdit } />
+              <Route path="/profile/" component={ Profile } />
+              <Route exact path="/" component={ Login } />
+              <Route path="*" component={ NotFound } />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    );
   }
 }
 
