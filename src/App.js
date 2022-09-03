@@ -14,7 +14,18 @@ import ProfileEdit from './components/ProfileEdit';
 import NotFound from './components/NotFound';
 
 class App extends React.Component {
+  state = {
+    userName: '',
+  };
+
+  handlerChangeLogin = async (event) => {
+    const { value } = event.target;
+    console.log(value);
+    this.setState({ userName: value });
+  };
+
   render() {
+    const { userName } = this.state;
     return (
       <div>
         <p>TrybeTunes</p>
@@ -35,7 +46,14 @@ class App extends React.Component {
               <Route path="/favorites" component={ Favorites } />
               <Route path="/profile/edit" component={ ProfileEdit } />
               <Route path="/profile/" component={ Profile } />
-              <Route exact path="/" component={ Login } />
+              <Route
+                exact
+                path="/"
+                render={ () => (<Login
+                  userName={ userName }
+                  handlerChange={ this.handlerChangeLogin }
+                />) }
+              />
               <Route path="*" component={ NotFound } />
             </Switch>
           </div>
