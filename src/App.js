@@ -17,10 +17,10 @@ class App extends React.Component {
     userName: '',
   };
 
-  handlerChangeLogin = async (event) => {
-    const { value } = event.target;
+  handlerChange = async (event) => {
+    const { value, name } = event.target;
     console.log(value);
-    this.setState({ userName: value });
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -31,7 +31,15 @@ class App extends React.Component {
         <Router>
           <div>
             <Switch>
-              <Route path="/search" component={ Search } />
+              <Route
+                path="/search"
+                render={
+                  (props) => (
+                    <Search
+                      { ...props }
+                    />)
+                }
+              />
               <Route path="/album/:id" render={ (props) => <Album { ...props } /> } />
               <Route path="/favorites" component={ Favorites } />
               <Route path="/profile/edit" component={ ProfileEdit } />
@@ -39,9 +47,10 @@ class App extends React.Component {
               <Route
                 exact
                 path="/"
-                render={ () => (<Login
+                render={ (props) => (<Login
+                  { ...props }
                   userName={ userName }
-                  handlerChange={ this.handlerChangeLogin }
+                  handlerChange={ this.handlerChange }
                 />) }
               />
               <Route path="*" component={ NotFound } />

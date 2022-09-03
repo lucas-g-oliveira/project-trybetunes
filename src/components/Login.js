@@ -28,6 +28,7 @@ class Login extends React.Component {
         <div>
           <input
             data-testid="login-name-input"
+            name="userName"
             placeholder="User"
             value={ userName }
             onChange={ handlerChange }
