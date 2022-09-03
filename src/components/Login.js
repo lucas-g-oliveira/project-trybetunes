@@ -25,7 +25,6 @@ class Login extends React.Component {
 
     return (
       <div data-testid="page-login">
-        <h1>Login</h1>
         <div>
           <input
             data-testid="login-name-input"

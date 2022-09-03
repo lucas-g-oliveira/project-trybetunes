@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Link,
+  /* Link, */
   Route,
   Switch,
 } from 'react-router-dom';
@@ -31,14 +31,13 @@ class App extends React.Component {
         <p>TrybeTunes</p>
         <Router>
           <div>
-            App
-            <Link to="/search">Search</Link>
+            {/* <Link to="/search">Search</Link>
             <Link to="/album">Album</Link>
             <Link to="/favorites">Favorites</Link>
             <Link to="/profile">Profile</Link>
             <Link to="/profile/edit">ProfileEdit</Link>
             <Link to="/">Login</Link>
-            <Link to="*">NotFound</Link>
+            <Link to="*">NotFound</Link> */}
 
             <Switch>
               <Route path="/search" component={ Search } />
