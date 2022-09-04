@@ -40,7 +40,10 @@ class App extends React.Component {
                     />)
                 }
               />
-              <Route path="/album/:id" render={ (props) => <Album { ...props } /> } />
+              <Route
+                path="/album/:id"
+                render={ (props) => <Album { ...props } /> }
+              />
               <Route path="/favorites" component={ Favorites } />
               <Route path="/profile/edit" component={ ProfileEdit } />
               <Route path="/profile/" component={ Profile } />
