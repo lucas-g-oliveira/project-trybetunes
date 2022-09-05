@@ -13,7 +13,6 @@ class Search extends React.Component {
 
   handleChange = async (event) => {
     const { value } = event.target;
-    console.log(value);
     this.setState({ searchMusic: value, inputValue: value });
   };
 
@@ -23,7 +22,6 @@ class Search extends React.Component {
       async () => {
         const { searchMusic } = this.state;
         const fechMusics = await searchAlbumsAPI(searchMusic);
-        console.log(fechMusics);
         this.setState({
           contentSeach: fechMusics.map((e) => (
             <div key={ e.collectionId }>

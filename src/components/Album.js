@@ -30,15 +30,11 @@ class Album extends React.Component {
   }
 
   render() {
-    const { match } = this.props;
-    const { id } = match.params;
     const { renderContent } = this.state;
 
     return (
       <div data-testid="page-album">
         <Header />
-        <h1>Album</h1>
-        <h1>{id}</h1>
         { renderContent }
       </div>
     );
