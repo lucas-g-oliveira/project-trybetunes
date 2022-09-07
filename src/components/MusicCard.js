@@ -1,30 +1,59 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, removeSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 
 class MusicCard extends React.Component {
   state = {
     loadingState: false,
-    favorite: false,
-    favoriteList: [],
+    listFavorite: [],
+  };
+
+  componentDidMount() {
+    this.updateFavorites();
+  }
+
+  updateFavorites = async () => {
+    const listFavoritesFetch = await getFavoriteSongs();
+    this.setState({
+      listFavorite: listFavoritesFetch,
+    });
+  };
+
+  checkEnabled = async () => {
+    const { data } = this.props;
+    this.setState({
+      loadingState: true,
+    }, async () => {
+      await addSong(data);
+      const listFavoritesFetch = await getFavoriteSongs();
+      this.setState({
+        loadingState: false,
+        listFavorite: listFavoritesFetch,
+      });
+    });
+  };
+
+  checkDisable = async () => {
+    const { data } = this.props;
+    this.setState({
+      loadingState: true,
+    }, async () => {
+      await removeSong(data);
+      const listFavoritesFetch = await getFavoriteSongs();
+      this.setState({
+        loadingState: false,
+        listFavorite: listFavoritesFetch,
+      });
+    });
   };
 
   handherChecked = async (event) => {
     const { checked } = event.target;
-    const { data } = this.props;
-    const { favorite, favoriteList } = this.state;
     if (checked) {
-      this.setState({
-        loadingState: true,
-        favoriteList: [...favoriteList, data],
-      }, async () => {
-        await addSong(favoriteList);
-        this.setState({
-          favorite: !favorite,
-          loadingState: false,
-        });
-      });
+      this.checkEnabled();
+    } else {
+      this.checkDisable();
     }
   };
 
@@ -32,7 +61,7 @@ class MusicCard extends React.Component {
 
   renderTracks = () => {
     const { data } = this.props;
-    const { favorite } = this.state;
+    const { listFavorite } = this.state;
     return (
       <div>
         <h4>{data.trackName}</h4>
@@ -53,14 +82,17 @@ class MusicCard extends React.Component {
             name={ data.trackId }
             type="checkbox"
             onChange={ this.handherChecked }
-            checked={ favorite }
+            checked={ listFavorite.some((e) => (e.trackId === data.trackId)) }
           />
         </label>
       </div>);
   };
 
   render() {
-    const { loadingState } = this.state;
+    const { loadingState, listFavorite } = this.state;
+    const { data } = this.props;
+    console.log(listFavorite.length);
+    console.log(listFavorite.some((e) => (e.trackId === data.trackId)));
     return (
       <div>
         {(loadingState) ? <Loading /> : this.renderTracks()}

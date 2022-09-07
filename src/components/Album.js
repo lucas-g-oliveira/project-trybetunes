@@ -6,7 +6,8 @@ import Loading from './Loading';
 import MusicCard from './MusicCard';
 
 class Album extends React.Component {
-  state = { renderContent: '' };
+  state = {
+    renderContent: '' };
 
   componentDidMount() {
     const { match } = this.props;
@@ -21,7 +22,11 @@ class Album extends React.Component {
             {
               fecthMusics
                 .slice(1)
-                .map((e) => (<MusicCard data={ e } key={ Math.random() } />))
+                .map((e) => (
+                  <MusicCard
+                    data={ e }
+                    key={ Math.random() }
+                  />))
             }
           </div>
         </div>
