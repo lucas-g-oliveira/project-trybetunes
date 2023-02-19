@@ -22,6 +22,7 @@ class Search extends React.Component {
       async () => {
         const { searchMusic } = this.state;
         const fechMusics = await searchAlbumsAPI(searchMusic);
+        console.log(fechMusics);
         this.setState({
           contentSeach: fechMusics.map((e) => (
             <div key={ e.collectionId }>

@@ -6,32 +6,17 @@ import Loading from './Loading';
 class MusicCard extends React.Component {
   state = {
     loadingState: false,
-    checked: false,
-  };
-
-  componentDidMount() {
-    this.checkedFX();
-  }
-
-  checkedFX = async () => {
-    const { favoriteList, data } = this.props;
-    this.setState(
-      { checked: favoriteList.some((e) => (e.trackId === data.trackId)) },
-    );
   };
 
   checkEnabled = async () => {
-    const { checked } = this.state;
-    const { data, updateFavorites } = this.props;
+    const { data } = this.props;
     console.log('clickEnabled');
     this.setState({
       loadingState: true,
     }, async () => {
       await addSong(data);
-      await updateFavorites();
       this.setState({
         loadingState: false,
-        checked: !checked,
       });
     });
   };
@@ -39,7 +24,6 @@ class MusicCard extends React.Component {
   checkDisable = async () => {
     console.log('clickDisabled');
     const { data, updateFavorites } = this.props;
-    const { checked } = this.state;
     this.setState({
       loadingState: true,
     }, async () => {
@@ -47,7 +31,6 @@ class MusicCard extends React.Component {
       await updateFavorites();
       this.setState({
         loadingState: false,
-        checked: !checked,
       });
     });
   };
@@ -64,8 +47,7 @@ class MusicCard extends React.Component {
   /*  {.flter((e) => (e.trackId === event.target.name))} */
 
   renderTracks = () => {
-    const { data } = this.props;
-    const { checked } = this.state;
+    const { data, checked } = this.props;
     return (
       <div>
         <h4>{data.trackName}</h4>
@@ -105,7 +87,7 @@ class MusicCard extends React.Component {
 MusicCard.propTypes = {
   data: PropTypes.instanceOf(Object).isRequired,
   updateFavorites: PropTypes.func.isRequired,
-  favoriteList: PropTypes.arrayOf(Object).isRequired,
+  checked: PropTypes.bool.isRequired,
 };
 
 export default MusicCard;

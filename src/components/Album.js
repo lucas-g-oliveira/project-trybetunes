@@ -19,11 +19,11 @@ class Album extends React.Component {
     this.setState({ renderContent: <Loading /> }, async () => {
       const fecthMusics = await getMusics(id);
       await getFavoriteSongs();
-      this.updateFavoriteList();
       this.setState({ renderContent: (
         <div key={ Math.random() }>
           <h5 data-testid="artist-name">{fecthMusics[0].artistName}</h5>
           <h5 data-testid="album-name">{fecthMusics[0].collectionName}</h5>
+          <h5>{favoriteList.length}</h5>
           <div>
             {
               fecthMusics
@@ -34,6 +34,9 @@ class Album extends React.Component {
                     key={ Math.random() }
                     updateFavorites={ this.updateFavoriteList }
                     favoriteList={ Array.isArray(favoriteList) ? favoriteList : [] }
+                    checked={
+                      favoriteList.some((j) => (e.trackId === j.trackId))
+                    }
                   />))
             }
           </div>
@@ -44,11 +47,7 @@ class Album extends React.Component {
 
   updateFavoriteList = async () => {
     const list = await getFavoriteSongs();
-    this.setState(
-      {
-        favoriteList: list,
-      },
-    );
+    this.setState({ favoriteList: list }, async () => 'OK');
   };
 
   render() {
